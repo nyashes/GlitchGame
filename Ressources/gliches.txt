@@ -1,4 +1,4 @@
-Liste des glitch possibles
+﻿Liste des glitch possibles
 •	Underflow/overflow sur nombre
 •	Stackoverflow
 •	OOB (out of bound)
@@ -38,10 +38,63 @@ Le joueur rentre dans une zone fermé, l’écran glitch avec l’affichage de  
 
 Alternative : warp glitch
 Il existe dans la ville de durin une porte bloqué et bug qui peut warp le joueur vers n’importe quel warp du jeu. En accédant à la base de données et en rentrant une valeur particulière il est possible que ce warp envoi à l’endroit du warp bloqué de crossbell, skipant l’énigme du back in time. Cette technique ne corrompt pas crossbell et n’augmente pas la corruption du monde. Pour traverser la porte il faut y accéder depuis le mur et donc effectuer un OOB juste avant. Pour ce faire, il faut donner un coup à un cochon (Référence à zelda) qui va devenir particulièrement vénère et knock back le joueur dès qu’il le trouvera. Le knock back peut envoyer directement dans la porte, même si elle n’est pas accessible. Pour donner un coup au cochon, la commande boire peut être utilisé pour que le tavernier accepte que c’est une bonne idée de frapper un cochon
+
 Utilisation du stackoverflow
 Dans la BDD il existe une zone protégée par un gros laser (zone à accéder pour modification). Un demi écran plus bas, il y a une pile matérialisant les logs d’accès à la base de donnée. Cette pile deviens de plus en plus grande à chaque action sur la BDD. Interagir avec permet de lire les logs de la façon suivante : 
 [current_timestamp] : {Accès|deconexion} de PNJ_XXX à la base
 Répété X fois pour chaque entrée/sortie du joueur dans la BDD. Plus le log est long, plus la pile est haute. La pile peut dépasser l’espace prévu pour contenir les « log » si la pile passe devant le laser, il est coupé et le chemin deviens accessible. Il faut 11 items (6 entrées, 5 sorties) pour que cela arrive
 Si le joueur continue d’utiliser la bdd trop souvent, la pile de logs va commencer à déborder en bas de l’écran et bloquer une zone qui pourra ou non contenir quelque chose d’utile
 
+Alternative : code mutant (première énigme de programmation du jeu)
+Juste à côté du laser, il existe un PC contrôlant les droits de passage. Pour passer il faut éxécuter la commande sudo sur ce PC mais le tavernier n'est pas un sudoer. Pour ajouter un sudoer, il faut avoir les droit du superuser et donc être capable de faire un sudo. Or cela tombe bien, le distributeur de boisson possède des droits de superuser pour utiliser la fonction createItem. Tout ce qu'il y a faire c'est de faire éxecuter le terminal par le distributeur et l'héritage des droits fera le reste.
+les commandes disponible sur le terminal (à mettre dans un choix multiple avec choix multiple pour les x y):
+ls -l
+mv x y
+su
+rm x
+cd hotdrink
+cd ..
+whoami
+exit
+unlockdoor
+faire bug le distributeur (en entrant une boisson supprimé de la BDD) affiche le log suivant:
+Unhandled Exception: System.ClassNotFoundException
+at ProjectFantasy.#unknown.ctor()
+at ProjectFantasy.ItemFactory.CreateItem<#unknown>()
+at ProjectFantasy.ItemFactory.CreateItem(id)
+at ProjectFantasy.AddInventoryItem(user, Itemid)
+at ProjectFantasy.CreateDeliciousHotDrink
+====env dump====
+Mono version: 4.6.2.7
+Current user: administrator
+Current context: /
+System: Deb14n B "
 
+solution (normale):
+/$> unlockdoor
+access denied
+/$> whoami
+Tavernier
+
+/$ cd hotdrink
+/$ ls -l
+coffee
+tea
+chocolate
+potatosoup
+/hotdrink$ rm coffee
+/hotdrink$ cd ..
+/$ exit
+
+aller voir la machine
+se rendre compte dans le debug log que la machine est admin
+/$ ls -l
+se rendre compte que bash et coffeemachine sont en permission 777
+/$ mv bash coffeemachine
+
+aller à la machine, interagir on se rend compte que la fenêtre de commande s'ouvre
+/# whoami
+Administrator
+/# unlockdoor
+unlocked
+ 
