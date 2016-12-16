@@ -1,0 +1,58 @@
+Manuel d'utilisation du terminal (bash) :
+	Liste des commandes :
+		rm (remove) permet de supprimer des fichiers
+			l'option -r permet de supprimer tout les fichiers du dossier
+			l'option -f permet de forcer l'execution
+			Il est FORTMENT déconseillé d'utiliser -r et -f dans la même commande rm, ceci peut aboutir à la suppression du système entier, ou en tout cas, gravement l'endomager, mais si c'est votre objectif allez-y...
+		su (switch-user) permet de changer d'utilisateur. 
+			Par défaut elle tente de connecter le compte administrateur de la machine si aucun argument n'est donné. Il faut cependant en connaître le mot de passe...
+		mv (move) permet de déplacer des fichier
+			argument 1: fichier source
+			argument 2: fichier destination
+			/dev/null est un fichier spécial représentant le vide. Déplacer un fichier vers le vide le supprime. Déplacer le vide dans un fichier vide le fichier. L'effet est souvent le même...
+			le fichier bash et le programme en cours d'execution. Il ne faut le supprimer ou modifier sous AUCUN prétexte
+		unlockdoor permet de dévérouiller les lasers de protection et a été implémenté par l'administrateur système.
+			Il faut cependant être administrateur pour l'utiliser afin d'éviter des accès non-désiré à la base de données
+		sudo permet de lancer un programme en tant qu'administrateur mais n'est pas utilisable tel quel
+
+Manuel d'utilisation de la base de données (mySQL) :
+	Liste des commandes :
+		SELECT * FROM `mabase` permet d'afficher le contenu d'une sous-base de donnée nommé "mabase"
+		UPDATE `mabase` SET mavaleur=x WHERE monidentifiant=y permet de changer la valeur de "mavaleur" en "x" pour l'entité dont "monidentifiant" vaut "y" dans la sous-base de donnée nommé "mabase"
+
+Manuel d'utilisation de l'interpreteur (mono) :
+	Liste des commandes :
+		mono monfichier.exe permet de lancer le programme séléctionné s'il est compatible avec mono
+		pour lancer un programme en tant qu'administrateur, la commande est sudo mono monfichier.exe
+
+Manuel d'utilisation de coffeemachine.exe :
+	Attention: ce programme doit être lancé par mono en tant qu'administrateur pour fonctionner
+	s'il est lancé par bash, bash s'ouvrira normalement sans executer ce programme
+	Liste des commandes :
+		café permet de servir un délicieux café
+		thé permet de servir un thé sirupeux
+		chocolat permet de servir un chocolat bien chaud
+		soupe permet de servir une soupe nutritive
+	Les boissons proposées sont stockées dans le sous-répertoire drink
+	Si une boisson n'est pas trouvé dans ce dossier, un rapport de crash détaillé sera affiché sur l'écran de la machine pour debogage
+	//TODO ATN: les gars faut vraiment qu'on change ce rapport, il est beaucoup trop détaillé, si un pirate met la main dessus ça deviens presque trop facile d'attaquer le système
+
+Manuel d'utilisation du système : 
+	Par défaut le compte administrateur n'a pas de mot de passe défini et n'est donc pas accessible via la commande su (switch-user). Pour effectuer des taches d'administration il est conseillé d'utiliser la commande "sudo bash" (ouvre un terminal en administrateur) à la place
+
+
+
+
+
+
+
+SOLUCE DE LA BDD === NE PAS LIRE SAUF SI BLOQUE DEPUIS LONGTEMPS (disponible pour la beta test uniquement, le texte précédent fait partie de la version finale)
+Si vous utilisez la soluce veuillez le signaler dans le rapport de test pour que nous ajustions la difficulté de cette section
+
+après être entré dans la base: lire le manuel sur la table puis accéder au terminal (le PC un peu plus haut)
+utiliser la commande rm -rf. La corbeille va déborder et bloquer les lasers
+
+une fois dans la base de données, entrez les commandes suivante :
+UPDATE `npc` SET displayid=65 where baseName="Tavernier" (permet de finir le jeu avec l'apparence d'un dracaufeu. PARFAITEMENT inutile donc TOTALEMENT indispensable)
+UPDATE `gameobject` SET warpid=45050 where id=1 (fait pointer la sortie de base de données vers la fin du jeu)
+se diriger vers la sortie pour être téléporté vers la section suivante (course poursuite)
